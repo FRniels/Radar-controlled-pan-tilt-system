@@ -1,0 +1,14 @@
+TO DO:
+- When plotting is paused, and light/dark is changed, the XY-axis ticks and number label colors aren't updated
+- Lower the TOP view so that the center of the grid is centered instead of 0,0,0 as default position
+- point/cluster info panel should be updated and redrawn again when the user scales or pans the axis system
+- multiview: point/cluster info panels need to be drawn on click
+
+Draw points/centrois:
+- The centroids are always dran after the data points, so in the default and centroid view, the centroids can sometimes be drawn on top of a point while the centroid would
+  actually needed to be drawn behind the point depending on the point and centroid xy position. This would require some sort of depth buffer but seems like overkill for this debug app ?
+
+Draw point/cluster info panel:
+- BUG: (seems to be in light mode) after changing views, multiview, ... suddenly the point/cluster info panel can't be made visible anymore
+  => now it does not show the info panel when the window is scale to fit the window, and it shows when going back to the original size
+- EXTRA: Add the number of points that the cluster contains when the user clicks on a cluster centroid.

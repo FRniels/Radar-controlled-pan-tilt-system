@@ -1,0 +1,185 @@
+<head>
+  <title>Radar Debug View</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index_no_server.css">
+</head>
+<body>
+  <div class="top-banner">
+    <div class="banner-content">
+      <span class="banner-icon">
+        <!-- Wave SVG icon -->
+        <svg width="40" height="36" viewBox="0 0 40 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 20
+                   Q 8 8, 14 20
+                   T 26 20
+                   T 38 20"
+                stroke="#62b673" stroke-width="3" fill="none"/>
+          <path d="M2 30
+                   Q 8 18, 14 30
+                   T 26 30
+                   T 38 30"
+                stroke="#4f8cff" stroke-width="2" fill="none" opacity="0.7"/>
+        </svg>
+      </span>
+      <span class="banner-title">Radar Debug View</span>
+      <span class="banner-subtitle">Real-time cluster & point visualization</span>
+    </div>
+  </div>
+  <div class="main-flex">
+    <div class="button-panel">
+      <!-- Button Light/Dark mode -->
+      <button class="modern-btn" onclick="toggleMode()">
+        <span id="lightDarkIcon">
+          <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="rgba(183, 234, 255, 0.7)">
+            <path d="M19 14a7 7 0 1 1-9-6.708 9 9 0 1 0 9 6.708z"/>
+          </svg>
+        </span>
+        <span id="lightDarkText">Light/Dark</span>
+      </button>
+      <!-- Button Play/Pause -->
+      <button id="pauseBtn" class="modern-btn" onclick="togglePause()">
+        <span id="pauseIcon">
+          <svg fill="rgba(183, 234, 255, 0.65)" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" width="28" height="28">
+            <rect x="8" y="6" width="4" height="16" />
+            <rect x="16" y="6" width="4" height="16" />
+          </svg>
+        </span>
+        <span id="pauseText">Pause</span>
+      </button>
+      <!-- Button scale canvas to window size or default size -->
+      <button id="scaleBtn" class="modern-btn" onclick="scaleToWindow()">
+        <span id="scaleIcon">
+          <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="rgba(183, 234, 255, 0.7)" stroke-width="2" stroke-linecap="round">
+            <polyline points="6,10 6,6 10,6" />
+            <line x1="6" y1="6" x2="10" y2="10" />
+            <polyline points="22,10 22,6 18,6" />
+            <line x1="22" y1="6" x2="18" y2="10" />
+            <polyline points="22,18 22,22 18,22" />
+            <line x1="22" y1="22" x2="18" y2="18" />
+            <polyline points="6,18 6,22 10,22" />
+            <line x1="6" y1="22" x2="10" y2="18" />
+          </svg>
+        </span>
+        <span id="scaleText">Scale to Window</span>
+      </button>
+      <!-- Button heatmap on/off -->
+      <button id="heatmapBtn" class="modern-btn" onclick="toggleHeatmap()">
+        <span id="heatmapIcon">
+          <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="6" height="6" fill="rgba(183, 234, 255, 0.2)" />
+            <rect x="10" y="2" width="6" height="6" fill="rgba(183, 234, 255, 0.4)" />
+            <rect x="18" y="2" width="6" height="6" fill="rgba(183, 234, 255, 0.6)" />
+            
+            <rect x="2" y="10" width="6" height="6" fill="rgba(183, 234, 255, 0.5)" />
+            <rect x="10" y="10" width="6" height="6" fill="rgba(183, 234, 255, 0.8)" />
+            <rect x="18" y="10" width="6" height="6" fill="rgba(183, 234, 255, 1.0)" />
+            
+            <rect x="2" y="18" width="6" height="6" fill="rgba(183, 234, 255, 0.3)" />
+            <rect x="10" y="18" width="6" height="6" fill="rgba(183, 234, 255, 0.6)" />
+            <rect x="18" y="18" width="6" height="6" fill="rgba(183, 234, 255, 0.9)" />
+          </svg>
+        </span>
+        <span id="heatmapText">Show Heatmap</span>
+      </button>
+      <!-- Custom view mode dropdown list / selected item -->
+      <div class="custom-dropdown" id="viewDropdown"> 
+        <span class="custom-dropdown-selected"> 
+          <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="rgba(183, 234, 255, 0.7)" stroke-width="2">
+            <circle cx="14" cy="20" r="2" />
+            <line x1="14" y1="18" x2="14" y2="10" />
+            <line x1="14" y1="10" x2="10" y2="6" />
+            <line x1="14" y1="10" x2="18" y2="6" />
+          </svg>
+          <span id="viewDropdownSelectedText">Default View</span>
+          <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="rgba(183, 234, 255, 0.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="10,12 14,16 18,12" />
+          </svg>
+        </span>
+        <div class="custom-dropdown-options" id="viewDropdownOptions">
+          <!-- Custom view mode default view option -->
+          <span class="custom-dropdown-option" data-value="default"> 
+            <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="rgba(183, 234, 255, 0.7)" stroke-width="2">
+              <circle cx="14" cy="20" r="2" />
+              <line x1="14" y1="18" x2="14" y2="10" />
+              <line x1="14" y1="10" x2="10" y2="6" />
+              <line x1="14" y1="10" x2="18" y2="6" />
+            </svg>
+            <span id="viewDropdownSelectedText">Default View</span>
+          </span>
+          <!-- Custom view mode top view option -->
+          <span class="custom-dropdown-option" data-value="top"> 
+            <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="rgba(183, 234, 255, 0.7)" stroke-width="2" stroke-linecap="round">
+              <circle cx="14" cy="14" r="1.5" />
+              <line x1="14" y1="2" x2="14" y2="12" />
+              <line x1="14" y1="16" x2="14" y2="26" />
+              <line x1="2" y1="14" x2="12" y2="14" />
+              <line x1="16" y1="14" x2="26" y2="14" />
+            </svg>
+            <span id="viewDropdownSelectedText">Top View</span>
+          </span>
+          <!-- Custom view mode centroid view -->
+          <span class="custom-dropdown-option" data-value="centroid"> 
+            <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="rgba(183, 234, 255, 0.7)" stroke-width="2">
+              <polygon points="12,4 16,4 14,8" fill="rgba(183, 234, 255, 0.3)" stroke="none"/>
+              <line x1="14" y1="8" x2="14" y2="14" />
+              <circle cx="14" cy="14" r="2" />
+            </svg>
+            <span id="viewDropdownSelectedText">Centroid View</span>
+          </span>
+        </div>
+      </div>
+      <!-- Button multiview mode on/off -->
+      <button id="multiViewBtn" class="modern-btn">
+        <span id="multiViewIcon">
+          <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="rgba(183, 234, 255, 0.7)" stroke-width="2">
+            <!-- Top-left window -->
+            <rect x="4" y="4" width="6" height="6" />
+            <!-- Top-right window -->
+            <rect x="15" y="4" width="6" height="6" />
+            <!-- Bottom-left window -->
+            <rect x="4" y="15" width="6" height="6" />
+            <!-- Bottom-right "popped-out" window -->
+            <rect x="16.5" y="16.5" width="6" height="6" />
+          </svg>
+        </span>
+        <span id="multiViewText">Multi-View</span>
+      </button>
+    </div>
+    <div class="canvas-container" style="position:relative; display:inline-block;">
+      <canvas id="radarCanvas" class="radarCanvas" width="1100" height="800"></canvas>
+      <div id="timestamp"><span class="dot"></span> <span id="timestamp-text">Loading...</span></div>
+      <div id="info-panel" class=""></div>
+      <div class="canvas-hint-icons">
+        <!-- Zoom icon (magnifier) -->
+        <span title="Zoom: Mouse wheel or pinch" class="hint-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="13" cy="13" r="8" stroke="#b7eaff" stroke-width="2" fill="none"/>
+            <rect x="19" y="19" width="6" height="2" rx="1" transform="rotate(45 19 19)" fill="#b7eaff" opacity="0.7"/>
+          </svg>
+        </span>
+        <!-- Pan icon (4-way arrows) -->
+        <span title="Pan: Drag with mouse or finger" class="hint-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <g stroke="#b7eaff" stroke-width="2" stroke-linecap="round">
+              <line x1="14" y1="4" x2="14" y2="24"/>
+              <line x1="4" y1="14" x2="24" y2="14"/>
+              <polyline points="14,4 11,7 17,7 14,4"/>
+              <polyline points="14,24 11,21 17,21 14,24"/>
+              <polyline points="4,14 7,11 7,17 4,14"/>
+              <polyline points="24,14 21,11 21,17 24,14"/>
+            </g>
+          </svg>
+        </span>
+        <span id="resetZoomPanIcon" title="Reset zoom and pan" class="hint-icon">
+          <svg width="28" height="28" fill="#b7eaff" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+            <path stroke="#b7eaff" stroke-width="1.2" d="M19.6334,18.375A9.497,9.497,0,0,0,21.875,14,9.615,9.615,0,0,0,5.25,5.5541V1.75H3.5v7h7v-1.75H6.4995a7.8556,7.8556,0,1,1-1.8375,7H2.7893A9.6347,9.6347,0,0,0,12.25,21.875a9.497,9.497,0,0,0,6.125-2.2241L24.753,26.25,26.25,24.753Z"></path>
+          </svg>
+        </span>
+      </div>
+      <div id="stats-panel" class="floating-panel"></div>
+    </div>
+  </div>
+  
+  <script src="index_no_server.js" type="text/javascript"></script>
+  
+</body>

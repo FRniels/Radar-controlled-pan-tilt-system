@@ -1,0 +1,5 @@
+JS radar debug:
+- Add the option to choose the angle of view. Atleast the angle of the radar that points straight ahead,
+  the mirrored view, straight to the radar. 
+- BONUS: A cool thing would be a view from the tracked cluster to the radar.
+  

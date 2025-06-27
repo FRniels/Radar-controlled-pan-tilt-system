@@ -1,0 +1,19 @@
+Pipeline Using Both RP2040 Cores 
+Note: 
+Both cores (ARM Cortex-M0+) are symmetric in performance and functionality on the RP Pico.
+Core 0 starts by default. Core 1 needs to be started by Core 0.
+
+Core 0:
+
+- Handles data acquisition (SPI)
+- Performs clustering (e.g., DBSCAN) per frame
+- Estimates cluster centroids (x, y)
+- Writes cluster info to a shared buffer
+
+Core 1:
+
+- Monitors shared cluster data
+- Checks for a valid cluster near the user-provided target position
+- Applies noise filtering (e.g., sliding window, range thresholding)
+- If a valid match is found, transitions to tracking mode
+- Tracks that cluster in subsequent frames
