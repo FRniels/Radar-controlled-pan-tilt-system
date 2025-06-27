@@ -9,14 +9,14 @@ Alongside trying to form clusters, noise can be filtered out.
 - Density Based scan: Suited for arbitrary shapes.
 
 ## K-means
-The implementation is not explained as it is not implemented in the SpotNShot application.
+The implementation is not explained as it is not implemented in the radar controlled pan tilt system application.
 ![image](https://github.com/user-attachments/assets/6aed2e5e-4ee4-4b0e-8519-db4b059a192f)
 ### Strength
 Can be computationally efficient compared to DB-scan.
 ### Weakness
 K-means's biggest weakness's are a varying quantity of clusters and arbitrary cluster shapes as K-means
 needs to know the quantity of clusters before execution and it prefers circular cluster shapes.
-Both of these weakness's are not tolerable in the SpotNShot application.
+Both of these weakness's are not tolerable in the radar controlled pan tilt system application.
 
 ## DB scan
 The following image is plucked straight out of a biology book, but the core concept of the DB scanning algorithm stays the same:
@@ -45,6 +45,6 @@ In this project, DB scan is the chosen algorithm. This choice is led by the fact
 arbitrary shapes in which K-means will probably fail in those situations.
 K-means will also often fail in recognizing close neighbouring clusters and unrightfully label them as one cluster.
 Although K-means could be experimented with depending on the application.
-However, 2 big concerns arise when using this algorithm for the SporNShot application.
+However, 2 big concerns arise when using this algorithm for the radar controlled pan tilt system application.
 - If multiple people are close together and K-means clusters them together, the calculated mid X/Y point could significantly drift, which would cause the spotlight's accuracy to drop.
 - The K-means algorithm requires to know the quantity of clusters before execution, which will be rather hard in most real-life scenarios.
