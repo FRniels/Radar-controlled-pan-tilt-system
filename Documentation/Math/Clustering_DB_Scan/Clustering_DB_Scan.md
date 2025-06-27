@@ -31,8 +31,8 @@ Algorithm:
 - Start at a randomly chosen point.
 - Check if it has enough neighbours laying in the defined Radius:
   - If so: classify it as a core point
-  - If not: classify it as noise
   - If not, but the point is connected to a core point: classify it as an edge point
+  - If not: classify it as noise
 - Continue the algorithm recursively/iteratively untill all points are classified.
 - Extra: Calculate the midpoint of the formed clusters to use it as final X/Y coordinates of the individual clusters.
 ### Strength
