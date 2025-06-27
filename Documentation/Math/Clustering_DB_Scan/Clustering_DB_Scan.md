@@ -34,6 +34,8 @@ Algorithm:
   - If not, but the point is connected to a core point: classify it as an edge point
   - If not: classify it as noise
 - Continue the algorithm recursively/iteratively untill all points are classified.
+  An interative approach is the preferred and chosen method for the radar controlled pan tilt system application.
+  Microcontroller constraints is one of the determening factors for this choice.
 - Extra: Calculate the midpoint of the formed clusters to use it as final X/Y coordinates of the individual clusters.
 ### Strength
 DB-scan handles a varying quantity of clusters and arbitrary cluster shapes very well compared to K-means.
