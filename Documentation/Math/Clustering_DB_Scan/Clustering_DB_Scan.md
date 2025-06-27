@@ -48,5 +48,5 @@ arbitrary shapes in which K-means will probably fail in those situations.
 K-means will also often fail in recognizing close neighbouring clusters and unrightfully label them as one cluster.
 Although K-means could be experimented with depending on the application.
 However, 2 big concerns arise when using this algorithm for the radar controlled pan tilt system application.
-- If multiple people are close together and K-means clusters them together, the calculated mid X/Y point could significantly drift, which would cause the spotlight's accuracy to drop.
+- If multiple objects are close together and K-means clusters them together, the calculated mid X/Y point could significantly drift, which would cause the pan tilt system's accuracy to drop.
 - The K-means algorithm requires to know the quantity of clusters before execution, which will be rather hard in most real-life scenarios.
