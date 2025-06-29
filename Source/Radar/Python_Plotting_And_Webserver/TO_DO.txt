@@ -1,28 +1,27 @@
-TO DO:
+----- TO DO -----
+
+WEB GUI:
 - When plotting is paused, and light/dark is changed, the XY-axis ticks and number label colors aren't updated
 - Lower the TOP view so that the center of the grid is centered instead of 0,0,0 as default position
+
 - point/cluster info panel should be updated and redrawn again when the user scales or pans the axis system
 - multiview: point/cluster info panels need to be drawn on click
 
-Draw points/centrois:
-- The centroids are always dran after the data points, so in the default and centroid view, the centroids can sometimes be drawn on top of a point while the centroid would
+- The centroids are always drawn after the data points, so in the default and centroid view, the centroids can sometimes be drawn on top of a point while the centroid would
   actually needed to be drawn behind the point depending on the point and centroid xy position. This would require some sort of depth buffer but seems like overkill for this debug app ?
 
-Draw point/cluster info panel:
+Draw point/cluster centroids info panel:
 - BUG: (seems to be in light mode) after changing views, multiview, ... suddenly the point/cluster info panel can't be made visible anymore
   => now it does not show the info panel when the window is scale to fit the window, and it shows when going back to the original size
 - EXTRA: Add the number of points that the cluster contains when the user clicks on a cluster centroid.
 
 
-Real data plot browser errors:
-- Uncaught (in promise) SyntaxError: Unexpected token 'I', ..."er":0,"x":Infinity,""... is not valid JSON
-  Uncaught (in promise) SyntaxError: No number after minus sign in JSON at position 2125 (line 1 column 2126)
-
-- line 599: Uncaught TypeError: data.points is not iterable
-
-- The generated data is bound to the the light mode/dark mode button ??? => Nope, seemed like i had an older version open in the browser
+DOUBLE CHECK: The generated data is bound to the the light mode/dark mode button ??? 
+=> Nope, seemed like i had an older version open in the browser alongside the new version and i misclicked the correct browser tab 
+=> double check later
 
 
+PYTHON WEBSERVER SOURCE CODE:
 TRY THIS BINARY INSTEAD OF JSON FORMAT SENDING/READING CODE FOR SHARING DATA BETWEEN THE CLIENT AND THE WEBSERVER: SHOULD GIVE A MAJOR PERFOMANCE BOOST:
 from flask import Response
 import struct
