@@ -20,4 +20,76 @@ Real data plot browser errors:
 
 - line 599: Uncaught TypeError: data.points is not iterable
 
-- The generated data is bound to the the light mode/dark mode button ???
+- The generated data is bound to the the light mode/dark mode button ??? => Nope, seemed like i had an older version open in the browser
+
+
+TRY THIS BINARY INSTEAD OF JSON FORMAT SENDING/READING CODE FOR SHARING DATA BETWEEN THE CLIENT AND THE WEBSERVER: SHOULD GIVE A MAJOR PERFOMANCE BOOST:
+from flask import Response
+import struct
+import numpy as np
+import time
+
+# Sending the data in a binary format instead of the typical JSON format for major performance increase (much smaller data size and faster parsing)
+@app.route('/data')
+def data():
+    with webserver_data_lock:
+		# Copy the list of dicts with x, y, cluster to another variable so it can be converted to a numpy array
+        points = webserver_data['points']      
+        clusters = webserver_data['clusters']  
+	
+		# Get the length of both data lists
+        n_points = len(points)
+        n_clusters = len(clusters)
+		# TO DO: THIS TIME IS NOT THE CORRECT TIME, IT SHOULD BE THE TIME OF THE RP PICO, THIS IS FOR LATER
+        timestamp = time.time()
+
+        # Convert to NumPy for efficient byte packing
+        def list_to_array(lst):
+            return np.array([[p['x'], p['y'], p['cluster']] for p in lst], dtype=np.float32)
+
+        point_array = list_to_array(points)
+        cluster_array = list_to_array(clusters)
+
+        # Build the binary buffer
+        header = struct.pack('<IIf', n_points, n_clusters, timestamp)
+        payload = point_array.tobytes() + cluster_array.tobytes()
+        full_data = header + payload
+
+        return Response(full_data, content_type='application/octet-stream')
+
+
+
+async function fetchData() {
+    const response = await fetch('/data');
+    const buffer = await response.arrayBuffer();
+
+    const headerView = new DataView(buffer, 0, 12);
+    const nPoints = headerView.getUint32(0, true);   // little-endian
+    const nClusters = headerView.getUint32(4, true);
+    const timestamp = headerView.getFloat32(8, true);
+
+    const floatData = new Float32Array(buffer, 12);
+    const points = [];
+    const clusters = [];
+
+    // Each point/cluster is 3 floats
+    for (let i = 0; i < nPoints; i++) {
+        const idx = i * 3;
+        points.push({
+            x: floatData[idx],
+            y: floatData[idx + 1],
+            cluster: floatData[idx + 2],
+        });
+    }
+
+    for (let i = 0; i < nClusters; i++) {
+        const idx = (nPoints + i) * 3;
+        clusters.push({
+            x: floatData[idx],
+            y: floatData[idx + 1],
+            cluster: floatData[idx + 2],
+        });
+    }
+
+    return { points, clusters, timestamp };
+}
