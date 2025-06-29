@@ -176,10 +176,23 @@ function hexToRgb(hex) {
 }
 
 // TO DO: THIS SHOULD BE SPLIT UP INTO RadarDataRead() and DrawData()
-function updateRadar() {
+// function updateRadar() {
+//     // const data = generateSingleClusterData();
+//     // const data = generateMultipleClusterData();
+//     const data = fetchData(); // Fetch data from the server
+//     drawData(data);
+// }
+
+async function updateRadar() {
     // const data = generateSingleClusterData();
-    const data = generateMultipleClusterData();
-    drawData(data);
+    // const data = generateMultipleClusterData();
+    const data = await fetchData(); // Fetch data from the server
+
+    // Validate data before drawing
+    if (data && Array.isArray(data.points)) { // TO DO: SHOULD I DO lastData = data;  HERE INSTEAD OF IN THE SINGLE VIEW DRAWING ???
+        // console.log(data); // DEBUG
+        drawData(data);
+    }
 }
 
 // Simulate radar data and generate a timestamp
@@ -208,58 +221,84 @@ function generateSingleClusterData() {
         timestamp: Date.now() / 1000
     };
 }
-// Simulate radar data and generate a timestamp
-function generateMultipleClusterData() {
-  // const pointsPerCluster = 5; // Static number of points per cluster
-  const clusterRadius = 1;
-  const centroidJitter = 0.6; // How far centroids can move within their region
 
-  // Define center regions (each cluster will jitter within this)
+// Simulate radar data and generate a timestamp => TO DO: CLUSTER 0 REPRESENTS THE TRACKED CLUSTER IN THE CURRENT IMPLEMENTATION
+function generateMultipleClusterData() {
+  const clusterRadius = 1;
+  const centroidJitter = 0.6;
+
+  // Semicircle path config for cluster 0
+  const radius = 3.5;          // Horizontal radius (from -3.5 to +3.5)
+  const verticalOffset = 1.8;  // Base Y level of the arc
+  const arcHeight = 1.2;       // How high the arc goes
+
+  const t = Date.now() / 1000;                             // Time in seconds
+  const theta = Math.PI * (0.5 + 0.5 * Math.sin(t * 0.5)); // oscillates between 0 and PI
+
+  const movingX = radius * Math.cos(theta);                     // -3.5 -> +3.5 -> -3.5
+  const movingY = verticalOffset + arcHeight * Math.sin(theta); // arc-shaped motion
+
   const baseCentroids = [
-    { x: -3.5, y: 1 },
-    { x: 0,    y: 3.5 },
-    { x: 3.5,  y: 2 }
+    { x: movingX, y: movingY }, // Moving centroid to represent the tracked cluster
+    { x: 0,        y: 3.5 },
+    { x: 3.5,      y: 2 }
   ];
 
   const clusters = baseCentroids.map((base, i) => ({
-    x: base.x + (Math.random() - 0.5) * centroidJitter,
-    y: base.y + (Math.random() - 0.5) * centroidJitter,
+    x: i === 0 ? base.x : base.x + (Math.random() - 0.5) * centroidJitter,
+    y: i === 0 ? base.y : base.y + (Math.random() - 0.5) * centroidJitter,
     cluster: i
   }));
 
   const points = [];
 
   clusters.forEach((cluster, clusterIndex) => {
-    // Pick a random number of points between 3 and 5, inclusive
-    const pointsPerCluster = Math.floor(Math.random() * 3) + 3; // 0->2 + 3 => [3,4,5]
+    const pointsPerCluster = Math.floor(Math.random() * 3) + 3;
 
     for (let i = 0; i < pointsPerCluster; ++i) {
       const angle = Math.random() * 2 * Math.PI;
-      const radius = Math.random() * clusterRadius;
+      const r = Math.random() * clusterRadius;
 
-      const x = cluster.x + Math.cos(angle) * radius;
-      const y = cluster.y + Math.sin(angle) * radius;
+      let x = cluster.x + Math.cos(angle) * r;
+      let y = cluster.y + Math.sin(angle) * r;
 
-      // Clamp to keep within overall bounds: X [-5,5], Y [0,5]
-      const clampedX = Math.max(gridMinX, Math.min(gridMaxX, x));
-      const clampedY = Math.max(gridMinY, Math.min(gridMaxY, y));
+      x = Math.max(gridMinX, Math.min(gridMaxX, x));
+      y = Math.max(gridMinY, Math.min(gridMaxY, y));
 
-      points.push({ x: clampedX, y: clampedY, cluster: clusterIndex });
+      points.push({ x, y, cluster: clusterIndex });
     }
   });
 
   return {
     points,
     clusters,
-    timestamp: Date.now() / 1000
+    timestamp: t
   };
 }
 
-// Fetch data from the python webserver
+
+// Fetch data from the python webserver => ORIGINAL
+// async function fetchData() {
+//     const response = await fetch('/data');
+//     const data = await response.json();
+//     drawData(data);
+// }
+// async function fetchData() {
+//     const response = await fetch('/data');
+//     const data = await response.json();
+
+//     // Validate data before drawing
+//     if (data && Array.isArray(data.points)) {
+//         console.log(data); // DEBUG
+//         drawData(data);
+//     } 
+// }
+
 async function fetchData() {
     const response = await fetch('/data');
     const data = await response.json();
-    drawData(data);
+
+    return data; 
 }
 
 // Light/Dark mode toggle => window onload will check the localStorage for the dark mode setting
@@ -586,6 +625,8 @@ function drawShadedCircle(x, y, r, colorStops) {
 }
 
 function drawDataPoints(data, centroid) {
+    // console.log("Draw points start");   // DEBUG
+    // console.log(data); // DEBUG
     for (const p of data.points) {
         const proj = project3D(p.x, p.y, 0, centroid);
         const r = 5;
@@ -600,6 +641,7 @@ function drawDataPoints(data, centroid) {
 
         drawShadedCircle(proj.x, proj.y, r, colorStops);
     }
+    // console.log("Draw points end"); // DEBUG
 }
 
 function drawClusterCentroids(data, centroid) {
@@ -621,7 +663,10 @@ function drawClusterCentroids(data, centroid) {
 function drawData(data) {
     const width = canvas.width;
     const height = canvas.height;
-    let centroid = (data.clusters[0] === null) ? null : data.clusters[0]; // TO DO: THE centroid SHOULD BE THE TRACKED TARGET CLUSTER
+    // let centroid = (data.clusters[0] === null) ? null : data.clusters[0]; // TO DO: THE centroid SHOULD BE THE TRACKED TARGET CLUSTER
+    // let centroid = (data.clusters === null) ? null : data.clusters[0];
+    let centroid = (Array.isArray(data.clusters) && data.clusters.length > 0) ? data.clusters[0] : null;
+
 
     // Clear the canvas before drawing to remove all previous content
     ctx.clearRect(0, 0, width, height);
@@ -866,9 +911,22 @@ window.onload = () => {
 
     // Initialize the axis system to match the initial canvas size => TO DO: call centerAxisSystem() to center the axis system ??
     updateAxisSystem(canvas.width, canvas.height);
+    
+    // ORIGINAL NO ASYNC
     // Set a timer for Updating/Reading new radar data and manually call the first radar data Update/Read
-    intervalId = setInterval(updateRadar, 250);
-    updateRadar();
+    // intervalId = setInterval(updateRadar, 250);
+    // updateRadar();
+
+    // NEW ASYNC
+    // First call (immediately)
+    (async () => {
+        await updateRadar();
+    })();
+
+    // Repeated calls via setInterval
+    intervalId = setInterval(() => {
+        updateRadar(); // Not awaited, but async is fine here
+    }, 250);
 };
 
 // Resize the canvas on window resize if the user has chosen to scale the canvas to the window size

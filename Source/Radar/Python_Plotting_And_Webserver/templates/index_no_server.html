@@ -1,7 +1,8 @@
 <head>
   <title>Radar Debug View</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="index_no_server.css">
+  <!-- <link rel="stylesheet" href="index_no_server.css"> -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='index_no_server.css') }}">
 </head>
 <body>
   <div class="top-banner">
@@ -180,6 +181,7 @@
     </div>
   </div>
   
-  <script src="index_no_server.js" type="text/javascript"></script>
+  <!-- <script src="index_no_server.js" type="text/javascript"></script> -->
+  <script src="{{ url_for('static', filename='index_no_server.js') }}" type="text/javascript"></script>
   
 </body>

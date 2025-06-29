@@ -12,3 +12,12 @@ Draw point/cluster info panel:
 - BUG: (seems to be in light mode) after changing views, multiview, ... suddenly the point/cluster info panel can't be made visible anymore
   => now it does not show the info panel when the window is scale to fit the window, and it shows when going back to the original size
 - EXTRA: Add the number of points that the cluster contains when the user clicks on a cluster centroid.
+
+
+Real data plot browser errors:
+- Uncaught (in promise) SyntaxError: Unexpected token 'I', ..."er":0,"x":Infinity,""... is not valid JSON
+  Uncaught (in promise) SyntaxError: No number after minus sign in JSON at position 2125 (line 1 column 2126)
+
+- line 599: Uncaught TypeError: data.points is not iterable
+
+- The generated data is bound to the the light mode/dark mode button ???

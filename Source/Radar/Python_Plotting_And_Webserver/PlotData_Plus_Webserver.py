@@ -135,7 +135,7 @@ def Plot_DB_Scan(points, centroids, waiting=False):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index_no_server.html') # index.html
 
 @app.route('/data')
 def data():
@@ -155,7 +155,7 @@ def shutdown():
     return 'Server shutting down...'
 
 def run_flask(): # Run Flask in background in a seperate thread so it doesn't block the main thread which also plots the data on the host computer.
-    app.run(debug=False, host='0.0.0.0', port=5000, use_reloader=False)
+    app.run(debug=False, host='0.0.0.0', port=24042, use_reloader=False)
 
 def main():
     plt.ion()           # Enable interactive mode
@@ -168,7 +168,7 @@ def main():
         print(f"Could not open serial port: {e}")
         return
 
-    # Retreive and send the tracking configuration for the start location and treshold for the to be tracked cluster 
+    # GUI: Retreive and send the tracking configuration for the start location and treshold for the to be tracked cluster 
     start_x, start_y, start_location_threshold, tracking_distance_threshold = Tracking_GetStartLocation()
     # print(f"Start X: {start_x}, Start Y: {start_y}, Radius: {threshold}")
     config_str = f"CONFIG {start_x} {start_y} {start_location_threshold} {tracking_distance_threshold}\n"
@@ -178,6 +178,7 @@ def main():
     try:
         # Plot a "waiting" frame until data is received
         Plot_DB_Scan([], [], waiting=True)
+
         # Start Flask server in background thread
         server_thread = threading.Thread(target=run_flask)
         server_thread.start()
@@ -199,7 +200,7 @@ def main():
         plt.close()
         try:
             # Shut down Flask server via HTTP POST request
-            requests.post('http://127.0.0.1:5000/shutdown')
+            requests.post('http://127.0.0.1:24042/shutdown')
         except Exception as e:
             print(f"Error shutting down server: {e}")
 

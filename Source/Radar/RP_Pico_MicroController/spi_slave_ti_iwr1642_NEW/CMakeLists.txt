@@ -28,25 +28,25 @@ set(PICO_BOARD pico CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(spi_slave_ti_iwr1642 C CXX ASM)
+project(spi_slave_ti_iwr1642_NEW C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(spi_slave_ti_iwr1642
+add_executable(spi_slave_ti_iwr1642_NEW
         main.c
         )
 
 # Pull in basic dependencies
-target_link_libraries(spi_slave_ti_iwr1642 pico_stdlib hardware_spi)
+target_link_libraries(spi_slave_ti_iwr1642_NEW pico_stdlib hardware_spi)
 
 # create map/bin/hex file etc.
-pico_add_extra_outputs(spi_slave_ti_iwr1642)
+pico_add_extra_outputs(spi_slave_ti_iwr1642_NEW)
 
 # add url via pico_set_program_url
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(spi_slave_ti_iwr1642 0)
-pico_enable_stdio_usb(spi_slave_ti_iwr1642 1)
+pico_enable_stdio_uart(spi_slave_ti_iwr1642_NEW 0)
+pico_enable_stdio_usb(spi_slave_ti_iwr1642_NEW 1)
