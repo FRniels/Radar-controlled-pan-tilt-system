@@ -120,11 +120,11 @@ These frequencies and the 3s duration are chosen because of:
 
 #### Chirp vs beat frequency
 In the audio example, 2 things are important to listen for:
-- The overall **audio still sounds as a linear chirp** going up in frequency.
+- The overall **audio still sounds as a linear chirp** going up in frequency:
   This is because the **chirp frequency components** are **still present** in the envelope of the mixed signal.
   The linear chirp frequencies can be thought of as the carrier wave.
-  These chirp frequency (high frequencies) can be and will be filtered out in radar by using a Low Pass Filter.
-- The **envelope of the mixed signal** represents the **Beat Frequency** of the mixed signal.
+  These chirp frequency components (high frequencies) can be and will be filtered out in radar by using a Low Pass Filter.
+- The **envelope of the mixed signal** represents the **Beat Frequency** of the mixed signal:
   Note that the **Beat Frequency** is a **Fixed frequency** , thus a **sinusoid** and not a chirp.
   Listen for a **slow oscillation** in the sound to recognize the **Beat Frequency**.
   Such a **Beat Frequency** can also be produced with mixing 2 sinusoids that are a couple of Hz apart as an intended **audio effect**.
