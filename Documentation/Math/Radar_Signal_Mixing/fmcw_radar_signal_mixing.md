@@ -7,11 +7,11 @@
 
 The transmitted FMCW chirp is typically modeled as:
 ```
-T(t) = sin(2 * pi * (f * x + (k / 2) * x^2))
+T(t) = sin(2 * pi * (f * t + (k / 2) * t^2))
 ```
 - f = start frequency (Hz)  
 - k = chirp slope (Hz/s)  
-- x = time (s)  
+- t = time (s)  
 
 The frequency increases linearly over time with slope k.
 
@@ -31,7 +31,7 @@ R(t) = sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2 ))
 
 In an FMCW radar system, the **mixer** multiplies TX and RX signals:
 ```
-y(t) = T(t) * R(t)
+y(x) = T(x) * R(t)
 ```
 Using the trigonometric identity:
 ```
@@ -104,8 +104,8 @@ This produces a **low-frequency envelope** corresponding to the beat signal.
 
 | Concept            | Expression                                            | Physical Meaning                                 |
 |--------------------|-------------------------------------------------------|--------------------------------------------------|
-| TX Signal          | sin(2 * pi * (f * x + (k / 2) * x^2))                 | Transmitted chirp with linear frequency increase |
-| RX Signal          | sin(2 * pi * (f * (x - tau) + (k / 2) * (x - tau)^2)) | Received delayed chirp                           |
+| TX Signal          | sin(2 * pi * (f * t + (k / 2) * t^2))                 | Transmitted chirp with linear frequency increase |
+| RX Signal          | sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2)) | Received delayed chirp                           |
 | Mixer Output       | T(t) * R(t)                                           | Product containing beat frequency                |
 | Beat Frequency     | f_b = k * tau                                         | Frequency proportional to target distance        |
 | Range Calculation  | d = (c * f_b) / (2 * k)                               | Distance to target                               |
