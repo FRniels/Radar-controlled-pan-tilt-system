@@ -29,7 +29,7 @@ R(t) = sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2 ))
 
 ---
 
-## Mixing and Beat Frequency
+### Mixing and Beat Frequency
 ![Math_RadarSignalMixing_Mixed_TxRx](https://github.com/user-attachments/assets/e924bf11-d30a-4bf9-8fa5-3284fd88210e)
 
 In an FMCW radar system, the **mixer** multiplies TX and RX signals:
@@ -53,7 +53,7 @@ which is proportional to the time delay **tau**.
 
 ---
 
-### Beat Signal Approximation
+## Beat Signal Approximation
 ```
 y(t) = cos ( 2 * pi * (f * tau + k * tau * t))
 ```
@@ -68,7 +68,7 @@ where **c** is the speed of light.
 
 ---
 
-## Desmos Simulation Notes
+### Plotting Simulation 
 
 - The **TX chirp** can be plotted as:
 
@@ -94,7 +94,7 @@ This produces a **low-frequency envelope** corresponding to the beat signal.
 
 ---
 
-## Why the Frequency and Phase Are Subtracted in TI Documentation
+### Why the frequency and phase are subtracted in (TI mmWave) radar documentation
 
 - Mixing signals corresponds to multiplying their waveforms.
 - This multiplication creates sum and difference frequencies.
@@ -103,7 +103,30 @@ This produces a **low-frequency envelope** corresponding to the beat signal.
 
 ---
 
-# Summary Table
+### Audio example
+[▶️ Download beat-chirp example](./Radar_Signal_Mixing_Audio_Example.mp3)
+[▶️ Download audacity project](./Radar_Signal_Mixing_Audio_Example.aup3)
+
+This is an audio demonstration as an analogy to the signal mixer functionality of the radar.
+Two 3s linear chirps are generated:
+- Start frequency of 440Hz
+- Stop  frequency of 10KHz.
+These frequencies and the 3s duration are chosen because of:
+- Well within the hearing range of humans.
+- A large frequency sweep in a short duration makes it a bit easier to see the linear chirp in the audacity plot.
+
+# Chirp vs beat frequency
+In the audio example, 2 things are important to listen for:
+- The overall **audio still sounds as a linear chirp** going up in frequency.
+  This is because the **chirp frequency components** are **still present** in the envelope of the mixed signal.
+  The linear chirp frequencies can be thought of as the carrier wave.
+  These chirp frequency (high frequencies) can be and will be filtered out in radar by using a Low Pass Filter.
+- The **envelope of the mixed signal** represents the **Beat Frequency** of the mixed signal.
+  Note that the **Beat Frequency** is a **Fixed frequency** , thus a **sinusoid** and not a chirp.
+  Listen for a **slow oscillation** in the sound to recognize the **Beat Frequency**.
+  Such a **Beat Frequency** can also be produced with mixing 2 sinusoids that are a couple of Hz apart as an intended **audio effect**.
+
+### Summary Table
 
 | Concept            | Expression                                            | Physical Meaning                                 |
 |--------------------|-------------------------------------------------------|--------------------------------------------------|
