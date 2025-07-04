@@ -112,7 +112,9 @@ This is an audio demonstration as an analogy to the signal mixer functionality o
 Two 3s linear chirps are generated:
 - Start frequency of 440Hz
 - Stop  frequency of 10KHz.
+
 These frequencies and the 3s duration are chosen because of:
+
 - Well within the hearing range of humans.
 - A large frequency sweep in a short duration makes it a bit easier to see the linear chirp in the audacity plot.
 
