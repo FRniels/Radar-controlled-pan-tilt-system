@@ -32,6 +32,7 @@ R(t) = sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2 ))
 ### Mixing and Beat Frequency
 ![Math_RadarSignalMixing_Mixed_TxRx](https://github.com/user-attachments/assets/e924bf11-d30a-4bf9-8fa5-3284fd88210e)
 
+#### Mixing Tx and Rx Signals
 In an FMCW radar system, the **mixer** multiplies TX and RX signals:
 ```
 y(x) = T(x) * R(t)
