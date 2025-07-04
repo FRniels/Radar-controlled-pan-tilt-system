@@ -13,13 +13,13 @@ T(t) = sin(2 * pi * (f * t + (k / 2) * t^2))
 - k = chirp slope (Hz/s)  
 - t = time (s)  
 
-The frequency increases linearly over time with slope k.
+The frequency increases linearly over time with slope **k**.
 
 ---
 
 ### Received Signal (RX)
 
-The received signal is a delayed version of the transmitted signal, due to the round-trip time delay \(\tau\) from the target:
+The received signal is a delayed version of the transmitted signal, due to the round-trip time delay **tau** from the target:
 ```
 R(t) = sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2 ))
 ```
@@ -42,11 +42,11 @@ The product yields two components:
 - **Difference frequency component** cos(a - b): contains the target range information  
 - **Sum frequency component** cos(a + b): filtered out by low-pass filtering
 
-The **beat frequency** (f_b is approximately:
+The **beat frequency** f_b is approximately:
 ```
 f_b = k * tau
 ```
-which is proportional to the time delay tau.
+which is proportional to the time delay **tau**.
 
 ---
 
@@ -54,14 +54,14 @@ which is proportional to the time delay tau.
 ```
 y(t) = cos ( 2 * pi * (f * tau + k * tau * t))
 ```
-- The instantaneous beat frequency increases linearly with time, proportional to \(\tau\).  
-- This frequency is used to calculate the distance \(d\) to the target:
+- The instantaneous beat frequency increases linearly with time, proportional to **tau**.  
+- This frequency is used to calculate the distance **d** to the target:
 
 ```
 d = (c * tau) / 2 = (c * f_b / (2 * k))
 ```
 
-where c is the speed of light.
+where **c** is the speed of light.
 
 ---
 
@@ -95,7 +95,7 @@ This produces a **low-frequency envelope** corresponding to the beat signal.
 
 - Mixing signals corresponds to multiplying their waveforms.
 - This multiplication creates sum and difference frequencies.
-- The **difference frequency** (subtraction of frequencies and phases) carries the range information.
+- The difference frequency (subtraction of frequencies and phases) carries the range information.
 - The sum frequency is removed by filtering.
 
 ---
