@@ -23,7 +23,7 @@ The received signal is a delayed version of the transmitted signal, due to the r
 ```
 R(t) = sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2 ))
 ```
-- tau = time delay proportional to target distance
+- tau = time delay proportional to target distance (s)
 
 ---
 
