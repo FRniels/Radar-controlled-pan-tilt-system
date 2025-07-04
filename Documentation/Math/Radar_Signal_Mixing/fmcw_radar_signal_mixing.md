@@ -53,7 +53,7 @@ which is proportional to the time delay **tau**.
 
 ---
 
-## Beat Signal Approximation
+#### Beat Signal Approximation
 ```
 y(t) = cos ( 2 * pi * (f * tau + k * tau * t))
 ```
@@ -115,7 +115,7 @@ These frequencies and the 3s duration are chosen because of:
 - Well within the hearing range of humans.
 - A large frequency sweep in a short duration makes it a bit easier to see the linear chirp in the audacity plot.
 
-# Chirp vs beat frequency
+#### Chirp vs beat frequency
 In the audio example, 2 things are important to listen for:
 - The overall **audio still sounds as a linear chirp** going up in frequency.
   This is because the **chirp frequency components** are **still present** in the envelope of the mixed signal.
@@ -126,7 +126,7 @@ In the audio example, 2 things are important to listen for:
   Listen for a **slow oscillation** in the sound to recognize the **Beat Frequency**.
   Such a **Beat Frequency** can also be produced with mixing 2 sinusoids that are a couple of Hz apart as an intended **audio effect**.
 
-### Summary Table
+## Summary Table
 
 | Concept            | Expression                                            | Physical Meaning                                 |
 |--------------------|-------------------------------------------------------|--------------------------------------------------|
