@@ -141,7 +141,7 @@ https://www.comm.utoronto.ca/~frank/notes/hilbert.pdf
 ![Math_RadarSignalMixing_HilbertTransform_Formula](../../Images/Math_RadarSignalMixing_HilbertTransform_Formula.png)
 
 ```
-H[g(t)] = g(t) * (1 / πt) 
+H[g(t)] = g(t) * (1 / πt)                       => Note: '*' is convolution and not multiplication!
         = (1 / π) ∫_{-∞}^{∞} g(τ) / (t - τ) dτ
         = (1 / π) ∫_{-∞}^{∞} g(t - τ) / τ dτ
 ```
