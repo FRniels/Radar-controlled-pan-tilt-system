@@ -168,8 +168,8 @@ z(t) = x(t) + j * x̂(t)
 
 Where:
 
-- x̂(t) is the Hilbert transform of the original signal x(t)
-- j is the imaginary unit
+- x̂(t) = is the Hilbert transform of the original signal x(t)
+- j    = is the imaginary unit
 
 So z(t) is a complex signal that lives in the complex plane.
 
