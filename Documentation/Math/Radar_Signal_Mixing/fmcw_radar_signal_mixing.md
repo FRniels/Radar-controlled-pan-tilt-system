@@ -197,9 +197,9 @@ f(t) = (1 / 2π) . (dϕ(t) / dt)
 | Concept                 | Expression                                            | Physical Meaning                                             |
 |-------------------------|-------------------------------------------------------|--------------------------------------------------------------|
 | TX Signal               | sin(2 * pi * (f * t + (k / 2) * t^2))                 | Transmitted chirp with linear frequency increase             |
-| RX Signal               | sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2)) | Received delayed chirp                                       |
+| RX Signal               | sin(2 * pi * (f * (t - τ) + (k / 2) * (t - τ)^2))     | Received delayed chirp                                       |
 | Mixer Output            | T(t) * R(t)                                           | Product containing beat frequency                            |
-| Beat Frequency          | f_b = k * tau                                         | Frequency proportional to target distance                    |
+| Beat Frequency          | f_b = k * τ                                           | Frequency proportional to target distance                    |
 | Range Calculation       | d = (c * f_b) / (2 * k)                               | Distance to target                                           |
 | Hilbert transform       | H[g(t)] = g(t) * (1 / πt)                             | Obtain the Hilbert transform of the original signal          | 
 | Analytic signal         | z(t) = x(t) + j * x̂(t)                                | Obtain the analytic signal                                   |  
