@@ -136,7 +136,20 @@ In the audio example, 2 things are important to listen for:
 ---
 
 ### Hilbert transform
-https://www.comm.utoronto.ca/~frank/notes/hilbert.pdf
+[The Hilber Transform](https://www.comm.utoronto.ca/~frank/notes/hilbert.pdf)
+
+The Hilbert transform shifts the phase of all frequency components of a real-valued signal by −90° (or +90°, depending on convention). 
+
+It’s used to create what's called an analytic signal, which is a complex signal where:
+
+- The real part is the original signal.
+- The imaginary part is the Hilbert transform of the original signal.
+
+Once the analytic signal is obtained, one can easily extract:
+
+- Amplitude envelope (smooth "shape" of the waveform)
+- Instantaneous phase
+- Instantaneous frequency
 
 ![Math_RadarSignalMixing_HilbertTransform_Formula](../../Images/Math_RadarSignalMixing_HilbertTransform_Formula.png)
 
@@ -146,7 +159,36 @@ H[g(t)] = g(t) * (1 / πt)                       => Note: '*' is convolution and
         = (1 / π) ∫_{-∞}^{∞} g(t - τ) / τ dτ
 ```
 
-#### TO DO
+#### Analytic signal
+For a real signal x(t), the analytic signal is:
+
+```
+z(t) = x(t) + j * x̂(t)  
+```
+
+Where:
+
+- x̂(t) is the Hilbert transform of the original signal x(t)
+- j is the imaginary unit
+
+So z(t) is a complex signal that lives in the complex plane.
+
+Obtaining the instantaneous amplitude, frequency and phase from the analytic signal:
+
+- Instantaneous amplitude:
+```
+A(t) = |z(t)| = sqrt(x(t)^2 + x^(t)^2)
+```
+
+- Instantaneous frequency:
+```
+ϕ(t) = arg(z(t)) = tan^-1(x^(t) / x(t))
+```
+
+- Instantaneous phase:
+```
+f(t) = (1 / 2π) . (dϕ(t) / dt)
+```
 
 ---
 
