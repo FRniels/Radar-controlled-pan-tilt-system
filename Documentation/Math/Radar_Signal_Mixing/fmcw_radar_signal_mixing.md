@@ -15,7 +15,13 @@ T(t) = sin(2 * pi * (f * t + (k / 2) * t^2))
 - k = chirp slope (Hz/s)  
 - t = time (s)  
 
-The frequency increases linearly over time with slope **k**.
+The frequency increases linearly over time with slope **k** which can be calculated as followed:
+```
+k = (Fe - Fs) / Tc
+```
+- Fe = end fequency of the chirp (Hz)
+- Fs = start frequency of the chirp (Hz)
+- Tc = chirp duration (s)
 
 ---
 
