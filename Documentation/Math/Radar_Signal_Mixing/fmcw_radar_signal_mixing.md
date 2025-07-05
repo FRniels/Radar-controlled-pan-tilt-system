@@ -4,7 +4,8 @@
 ## FMCW Chirp Signals
 
 ### Transmitted Signal (TX)
-![Math_RadarSignalMixing_Tx](https://github.com/user-attachments/assets/5f122585-831f-4c80-9298-b465e38d1674)
+![Math_RadarSignalMixing_Tx](../../Images/Math_RadarSignalMixing_Tx.png)
+
 
 The transmitted FMCW chirp is typically modeled as:
 ```
@@ -19,7 +20,7 @@ The frequency increases linearly over time with slope **k**.
 ---
 
 ### Received Signal (RX)
-![Math_RadarSignalMixing_Rx](https://github.com/user-attachments/assets/57234599-9fa7-4251-b52f-d0f1937621c5)
+![Math_RadarSignalMixing_Rx](../../Images/Math_RadarSignalMixing_Rx.png)
 
 The received signal is a delayed version of the transmitted signal, due to the round-trip time delay **tau** from the target:
 ```
@@ -30,7 +31,7 @@ R(t) = sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2 ))
 ---
 
 ### Mixing and Beat Frequency
-![Math_RadarSignalMixing_Mixed_TxRx](https://github.com/user-attachments/assets/e924bf11-d30a-4bf9-8fa5-3284fd88210e)
+![Math_RadarSignalMixing_Mixed_TxRx](../../Images/Math_RadarSignalMixing_Mixed_TxRx.png)
 
 #### Mixing Tx and Rx Signals
 In an FMCW radar system, the **mixer** multiplies TX and RX signals:
