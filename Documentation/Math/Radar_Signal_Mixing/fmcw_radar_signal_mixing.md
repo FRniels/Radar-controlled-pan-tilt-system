@@ -62,7 +62,10 @@ The product yields two components:
   
 ---
 
-#### Beat Signal Approximation
+### Beat Signal and Approximation
+The beat signal is represented as an amplitude modulation that occurs when mixing the Tx and Rx signals.
+Note the fixed **sinusoid shape of the envelope** of the **mixed TX and Rx chirp** in the above plot. This envelope represents the **Beat signal**
+
 The **beat frequency** f_b is approximately:
 ```
 f_b = k * τ
