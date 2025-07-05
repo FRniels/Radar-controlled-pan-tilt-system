@@ -19,7 +19,7 @@ The frequency increases linearly over time with slope **k** which can be calcula
 ```
 k = (Fe - Fs) / Tc
 ```
-- Fe = end fequency of the chirp (Hz)
+- Fe = end frequency of the chirp (Hz)
 - Fs = start frequency of the chirp (Hz)
 - Tc = chirp duration (s)
 
