@@ -1,5 +1,5 @@
 
-# FMCW Radar Rx/Tx Signal mixing and signal property acquisition
+# FMCW Radar Tx/Rx Signal mixing and signal property acquisition
 
 ## FMCW Chirp Signals
 
