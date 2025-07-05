@@ -203,7 +203,7 @@ f(t) = (1 / 2π) . (dϕ(t) / dt)
 | Range Calculation       | d = (c * f_b) / (2 * k)                               | Distance to target                                           |
 | Hilbert transform       | H[g(t)] = g(t) * (1 / πt)                             | Obtain the Hilbert transform of the original signal          | 
 | Analytic signal         | z(t) = x(t) + j * x̂(t)                                | Obtain the analytic signal                                   |  
-| Instantaneous amplitude | A(t) = |z(t)| = sqrt(x(t)^2 + x̂(t)^2)                 | Extract the instantaneous amplitude from the analytic signal |  
+| Instantaneous amplitude | A(t) = \|z(t)\| = sqrt(x(t)^2 + x̂(t)^2)               | Extract the instantaneous amplitude from the analytic signal |  
 | Instantaneous frequency | ϕ(t) = arg(z(t)) = tan^-1(x̂(t) / x(t))                | Extract the instantaneous frequency from the analytic signal |
 | Instantaneous phase     | f(t) = (1 / 2π) . (dϕ(t) / dt)                        | Extract the instantaneous phase from the analytic signal     |
 
