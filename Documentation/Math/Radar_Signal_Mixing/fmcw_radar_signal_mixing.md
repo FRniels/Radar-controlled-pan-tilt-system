@@ -22,11 +22,11 @@ The frequency increases linearly over time with slope **k**.
 ### Received Signal (RX)
 ![Math_RadarSignalMixing_Rx](../../Images/Math_RadarSignalMixing_Rx.png)
 
-The received signal is a delayed version of the transmitted signal, due to the round-trip time delay **tau** from the target:
+The received signal is a delayed version of the transmitted signal, due to the round-trip time delay **τ** from the target:
 ```
-R(t) = sin(2 * pi * (f * (t - tau) + (k / 2) * (t - tau)^2 ))
+R(t) = sin(2 * pi * (f * (t - τ) + (k / 2) * (t - τ)^2 ))
 ```
-- tau = time delay proportional to target distance (s)
+- τ (tau) = time delay proportional to target distance (s)
 
 ---
 
@@ -49,21 +49,21 @@ The product yields two components:
 
 The **beat frequency** f_b is approximately:
 ```
-f_b = k * tau
+f_b = k * τ
 ```
-which is proportional to the time delay **tau**.
+which is proportional to the time delay **τ**.
 
 ---
 
 #### Beat Signal Approximation
 ```
-y(t) = cos ( 2 * pi * (f * tau + k * tau * t))
+y(t) = cos ( 2 * pi * (f * τ + k * τ * t))
 ```
-- The instantaneous beat frequency increases linearly with time, proportional to **tau**.  
+- The instantaneous beat frequency increases linearly with time, proportional to **τ**.  
 - This frequency is used to calculate the distance **d** to the target:
 
 ```
-d = (c * tau) / 2 = (c * f_b / (2 * k))
+d = (c * τ) / 2 = (c * f_b / (2 * k))
 ```
 
 where **c** is the speed of light.
@@ -81,7 +81,7 @@ T(x) = sin(2 * pi * (f * x + (k / 2) * x^2))
 - The **RX chirp** is the delayed version:
 
 ```
-R(x) = sin(2 * pi * (f * (x - tau) + (k / 2 * (x - tau)^2))
+R(x) = sin(2 * pi * (f * (x - τ) + (k / 2 * (x - τ)^2))
 ```
 
 - Simply plotting T(x) + R(x) shows interference but **does not model the radar beat frequency** correctly.
