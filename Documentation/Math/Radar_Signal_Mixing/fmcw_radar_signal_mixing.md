@@ -76,6 +76,7 @@ The beat signal approximation can be modeled as:
 ```
 y(t) = cos ( 2 * pi * (f * τ + k * τ * t))
 ```
+- f = start frequency (Hz) 
 - The instantaneous beat frequency increases linearly with time, proportional to **τ**.  
 - This frequency is used to calculate the distance **d** to the target:
 
