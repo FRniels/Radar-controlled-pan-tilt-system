@@ -66,9 +66,9 @@ The product yields two components:
 The beat signal is represented as an amplitude modulation that occurs when mixing the Tx and Rx signals.
 Note the fixed **sinusoid shape of the envelope** of the **mixed TX and Rx chirp** in the above plot. This envelope represents the **Beat signal**
 
-The **beat frequency** f_b is approximately:
+The **beat frequency** Fb is approximately:
 ```
-f_b = k * τ
+Fb = k * τ
 ```
 which is proportional to the time delay **τ**.
 
@@ -80,7 +80,7 @@ y(t) = cos ( 2 * pi * (f * τ + k * τ * t))
 - This frequency is used to calculate the distance **d** to the target:
 
 ```
-d = (c * τ) / 2 = (c * f_b / (2 * k))
+d = (c * τ) / 2 = (c * Fb / (2 * k))
 ```
 
 where **c** is the speed of light.
@@ -207,8 +207,8 @@ f(t) = (1 / 2π) . (dϕ(t) / dt)
 | TX Signal               | sin(2 * pi * (f * t + (k / 2) * t^2))                 | Transmitted chirp with linear frequency increase             |
 | RX Signal               | sin(2 * pi * (f * (t - τ) + (k / 2) * (t - τ)^2))     | Received delayed chirp                                       |
 | Mixer Output            | T(t) * R(t)                                           | Product containing beat frequency                            |
-| Beat Frequency          | f_b = k * τ                                           | Frequency proportional to target distance                    |
-| Range Calculation       | d = (c * f_b) / (2 * k)                               | Distance to target                                           |
+| Beat Frequency          | Fb = k * τ                                            | Frequency proportional to target distance                    |
+| Range Calculation       | d = (c * Fb) / (2 * k)                                | Distance to target                                           |
 | Hilbert transform       | H[g(t)] = g(t) * (1 / πt)                             | Obtain the Hilbert transform of the original signal          | 
 | Analytic signal         | z(t) = x(t) + j * x̂(t)                                | Obtain the analytic signal                                   |  
 | Instantaneous amplitude | A(t) = \|z(t)\| = sqrt(x(t)^2 + x̂(t)^2)               | Extract the instantaneous amplitude from the analytic signal |  
