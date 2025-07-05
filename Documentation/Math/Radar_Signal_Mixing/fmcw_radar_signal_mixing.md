@@ -177,12 +177,12 @@ Obtaining the instantaneous amplitude, frequency and phase from the analytic sig
 
 - Instantaneous amplitude:
 ```
-A(t) = |z(t)| = sqrt(x(t)^2 + x^(t)^2)
+A(t) = |z(t)| = sqrt(x(t)^2 + x̂(t)^2)
 ```
 
 - Instantaneous frequency:
 ```
-ϕ(t) = arg(z(t)) = tan^-1(x^(t) / x(t))
+ϕ(t) = arg(z(t)) = tan^-1(x̂(t) / x(t))
 ```
 
 - Instantaneous phase:
