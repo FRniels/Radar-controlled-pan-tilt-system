@@ -59,7 +59,7 @@ The product yields two components:
 - This multiplication creates sum and difference frequencies.
 - The difference frequency (subtraction of frequencies and phases) carries the range information.
 - The sum frequency is removed by filtering.
-- 
+  
 ---
 
 #### Beat Signal Approximation
