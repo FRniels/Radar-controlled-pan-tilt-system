@@ -134,7 +134,8 @@ In the audio example, 2 things are important to listen for:
   
   This is because the **chirp frequency components** are **still present** in the envelope of the mixed signal.
   The linear chirp frequencies can be thought of as the carrier wave.
-  These chirp frequency components (high frequencies) can be and will be filtered out in radar by using a Low Pass Filter.
+  These chirp frequency components (high frequencies) can and will be filtered out in radar by using some form of Low Pass Filtering.
+  (Traditional low pass filters that use standard electronics low pass filters principles will not work because the beat signal is not an actual real signal.)
   
 - The **envelope of the mixed signal** represents the **Beat Frequency** of the mixed signal:
   
