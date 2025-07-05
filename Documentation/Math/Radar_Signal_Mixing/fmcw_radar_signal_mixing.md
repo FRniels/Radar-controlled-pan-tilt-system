@@ -137,7 +137,7 @@ In the audio example, 2 things are important to listen for:
   These chirp frequency components (high frequencies) can and will be filtered out in radar by using some form of Low Pass Filtering.
   (Traditional low pass filters that use standard electronics low pass filter principles will not work because the beat signal is not an actual real signal.)
   
-- The **envelope of the mixed signal** represents the **Beat Frequency** of the mixed signal:
+- The **Frequency of the mixed signal's envelope cycle** represents the **Beat Frequency** of the mixed signal:
   
   Note that the **Beat Frequency** is a **Fixed frequency** , thus a **sinusoid** and not a chirp.
   Listen for a **slow oscillation** in the sound **amplitude** to recognize the **Beat Frequency**.
