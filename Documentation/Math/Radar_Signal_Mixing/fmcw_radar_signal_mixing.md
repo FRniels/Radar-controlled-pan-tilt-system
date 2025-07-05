@@ -155,8 +155,8 @@ Once the analytic signal is obtained, one can easily extract:
 
 ```
 H[g(t)] = g(t) * (1 / πt)                       => Note: '*' is convolution and not multiplication!
-        = (1 / π) ∫_{-∞}^{∞} g(τ) / (t - τ) dτ
-        = (1 / π) ∫_{-∞}^{∞} g(t - τ) / τ dτ
+        = (1 / π) ∫_{-∞}^{∞} (g(τ) / (t - τ)) . dτ
+        = (1 / π) ∫_{-∞}^{∞} (g(t - τ) / τ) . dτ
 ```
 
 #### Analytic signal
