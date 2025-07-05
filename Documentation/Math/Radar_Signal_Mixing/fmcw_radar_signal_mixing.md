@@ -130,7 +130,7 @@ In the audio example, 2 things are important to listen for:
 - The **envelope of the mixed signal** represents the **Beat Frequency** of the mixed signal:
   
   Note that the **Beat Frequency** is a **Fixed frequency** , thus a **sinusoid** and not a chirp.
-  Listen for a **slow oscillation** in the sound to recognize the **Beat Frequency**.
+  Listen for a **slow oscillation** in the sound **amplitude** to recognize the **Beat Frequency**.
   Such a **Beat Frequency** can also be produced with mixing 2 sinusoids that are a couple of Hz apart as an intended **audio effect**.
 
 ---
