@@ -53,15 +53,23 @@ The product yields two components:
 - **Difference frequency component** cos(a - b): contains the target range information  
 - **Sum frequency component** cos(a + b): filtered out by low-pass filtering
 
+#### Why the instantaneous frequency and phase of the Tx and Rx signals are subtracted in (TI mmWave) radar documentation
+
+- Mixing signals corresponds to multiplying their waveforms.
+- This multiplication creates sum and difference frequencies.
+- The difference frequency (subtraction of frequencies and phases) carries the range information.
+- The sum frequency is removed by filtering.
+- 
+---
+
+#### Beat Signal Approximation
 The **beat frequency** f_b is approximately:
 ```
 f_b = k * τ
 ```
 which is proportional to the time delay **τ**.
 
----
-
-#### Beat Signal Approximation
+The beat signal approximation can be modeled as:
 ```
 y(t) = cos ( 2 * pi * (f * τ + k * τ * t))
 ```
@@ -99,15 +107,6 @@ Y(x) = T(x) * R(x)
 ```
 
 This produces a **low-frequency envelope** corresponding to the beat signal.
-
----
-
-### Why the frequency and phase are subtracted in (TI mmWave) radar documentation
-
-- Mixing signals corresponds to multiplying their waveforms.
-- This multiplication creates sum and difference frequencies.
-- The difference frequency (subtraction of frequencies and phases) carries the range information.
-- The sum frequency is removed by filtering.
 
 ---
 
