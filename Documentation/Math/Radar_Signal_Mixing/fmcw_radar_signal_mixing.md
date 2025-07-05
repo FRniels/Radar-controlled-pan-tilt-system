@@ -1,5 +1,5 @@
 
-# FMCW Radar Signal Simulation Explanation
+# FMCW Radar Rx/Tx Signal mixing and signal property acquisition
 
 ## FMCW Chirp Signals
 
