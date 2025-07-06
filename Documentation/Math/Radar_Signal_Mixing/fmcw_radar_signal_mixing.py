@@ -131,7 +131,7 @@ def main():
     # Mixed Tx/Rx & beat signal
     axes[2].set_title("Mixed Tx/Rx signal and Beat Approximation")
     axes[2].plot(t, chirp_signal_mixed, label="Mixed Tx/Rx", color="purple")
-    axes[2].plot(t, chirp_signal_mixed_beat_approximation, label="Beat Approx.", color="red", linestyle="--")
+    axes[2].plot(t, chirp_signal_mixed_beat_approximation, label="Beat Approx.", color="#DFFF00", linestyle="--")
     axes[2].set_ylabel("Amplitude")
     axes[2].legend(loc='upper right', bbox_to_anchor=(1, 0.85))
     axes[2].grid(True)
@@ -154,15 +154,15 @@ def main():
     axes[5].set_title("Envelope, Phase and Frequency from Analytic Signal")
 
     # Primary Y-axis (Amplitude)
-    axes[5].plot(t, amplitude_envelope, label="Envelope", color="purple")
-    axes[5].set_ylabel("Amplitude", color="purple")
-    axes[5].tick_params(axis='y', labelcolor='purple')
+    axes[5].plot(t, amplitude_envelope, label="Envelope", color="#DFFF00")
+    axes[5].set_ylabel("Amplitude", color="#DFFF00")
+    axes[5].tick_params(axis='y', labelcolor='#DFFF00')
 
     # Secondary Y-axis (Phase)
     ax_phase = axes[5].twinx()
-    ax_phase.plot(t, instantaneous_phase, label="Phase", color="orange", linestyle="--")
-    ax_phase.set_ylabel("Phase (radians)", color="orange")
-    ax_phase.tick_params(axis='y', labelcolor='orange')
+    ax_phase.plot(t, instantaneous_phase, label="Phase", color="#CD607E", linestyle="--")
+    ax_phase.set_ylabel("Phase (radians)", color="#CD607E")
+    ax_phase.tick_params(axis='y', labelcolor='#CD607E')
     ax_phase.set_yticks([phi])
     ax_phase.set_yticklabels([f"{phi:.2f}"])
 
@@ -170,9 +170,9 @@ def main():
     ax_freq = axes[5].twinx()
     ax_freq.spines["right"].set_position(("axes", 1.05))
     # ax_freq.plot(t, instantaneous_frequency, color="green", linestyle=":", label="Frequency")
-    ax_freq.plot(t, expected_instantaneous_frequency, color="green", linestyle="--", label="Expected")
-    ax_freq.set_ylabel("Freq (Hz)", color="green")
-    ax_freq.tick_params(axis='y', labelcolor='green')
+    ax_freq.plot(t, expected_instantaneous_frequency, color="#00CED1", linestyle="--", label="Expected")
+    ax_freq.set_ylabel("Freq (Hz)", color="#00CED1")
+    ax_freq.tick_params(axis='y', labelcolor='#00CED1')
     ax_freq.set_ylim(f_start - 100, f_end + 100)
     ax_freq.set_yticks([f_start, f_end])
 
