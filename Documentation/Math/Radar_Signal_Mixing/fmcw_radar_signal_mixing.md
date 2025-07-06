@@ -145,7 +145,7 @@ In the audio example, 2 things are important to listen for:
 
 ---
 
-### Hilbert transform
+### Hilbert transform for extra signal insight
 [The Hilbert Transform](https://www.comm.utoronto.ca/~frank/notes/hilbert.pdf)
 
 The Hilbert transform shifts the phase of all frequency components of a real-valued signal by −90° (or +90°, depending on convention). 
