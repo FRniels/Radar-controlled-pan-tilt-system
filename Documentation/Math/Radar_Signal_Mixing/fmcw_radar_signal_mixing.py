@@ -12,7 +12,8 @@ dt = 1 / sample_rate   # Time step between discrete samples
 # Derived values
 t = np.linspace(0, Tc, int(Tc * sample_rate), endpoint=False) # Generate discrete time data for the chirp plots
 k = (f_end - f_start) / Tc                                    # Compute the chirp slope
-tau = (1 / f_start) * 0.25                                    # 90degree phase lag
+tau = (1 / f_start) * 0.25                                    # * 0.25 gives a 90degree phase shift of the starting frequency
+phi = 2 * np.pi * f_start * tau                               # Computed start phase shift
 
 # Generate chirp signal (IMPORTANT: These generated signals are already normalized because they are values between -1 and 1)
 chirp_signal_tx = np.sin(2 * np.pi * (f_start * t + 0.5 * k * t**2))
@@ -90,70 +91,112 @@ def main():
     amplitude_envelope = np.abs(analytic_signal)
     instantaneous_phase = np.unwrap(np.angle(analytic_signal))
     instantaneous_frequency = np.gradient(instantaneous_phase, dt) / (2 * np.pi)
+    expected_instantaneous_frequency = f_start + k * t # Gives the expected instantaneous frequency at each time point t
 
 
     # 5. Plotting
-    fig, axes = plt.subplots(nrows=8, ncols=1, figsize=(20, 8), sharex=True)
+    # Custom soft dark theme (light-dark gray)
+    plt.rcParams.update({
+        'figure.facecolor': '#2e2e2e',     # Figure background (darker gray)
+        'axes.facecolor': '#3c3c3c',       # Axes (plot area) background (medium gray)
+        'savefig.facecolor': '#2e2e2e',    # For saving images
+
+        'text.color': 'white',
+        'axes.labelcolor': 'white',
+        'xtick.color': 'white',
+        'ytick.color': 'white',
+        'axes.edgecolor': 'white',
+        'grid.color': '#555555',           # Soft gray grid
+        'legend.facecolor': '#3c3c3c',     # Match axes background
+        'legend.edgecolor': 'white',
+        'legend.labelcolor': 'white',
+    })
     
-    style.use('ggplot') # Emulate the styling of the ggplot (plotting package for R)
-    # style.use("dark_background")
-    style.use("Solarize_Light2")
-    
+    fig, axes = plt.subplots(nrows=6, ncols=1, figsize=(20, 10), sharex=True)
+
     fig.suptitle("Radar signal mixing and signal property acquisition", fontsize=16)
 
-    # Plot each signal in its own subplot
-    axes[0].set_title("Chirp Tx signal (440Hz - 10KHz)", fontsize=12)
-    axes[0].plot(t, chirp_signal_tx)
-    axes[0].set_xlabel("Time(s)")
+    # Tx
+    axes[0].set_title("Chirp Tx signal (440Hz - 10KHz)")
+    axes[0].plot(t, chirp_signal_tx, color="blue")
     axes[0].set_ylabel("Amplitude")
-    
-    axes[1].set_title("Chirp Rx signal (440Hz - 10KHz, lagging the Tx chirp by 90deg)", fontsize=12)
-    axes[1].plot(t, chirp_signal_rx)
-    axes[1].set_xlabel("Time(s)")
+    axes[0].grid(True)
+
+    # Rx
+    axes[1].set_title("Chirp Rx signal (lagging by 90°)")
+    axes[1].plot(t, chirp_signal_rx, color="orange")
     axes[1].set_ylabel("Amplitude")
-    
-    axes[2].set_title("Chirp mixed Tx/Rx signal and Beat Approximation", fontsize=12)
-    axes[2].plot(t, chirp_signal_mixed, label="Mixed Tx/Rx")
-    axes[2].plot(t, chirp_signal_mixed_beat_approximation, label="Beat Approximation", color="red", linestyle="--")
-    axes[2].set_xlabel("Time (s)")
+    axes[1].grid(True)
+
+    # Mixed Tx/Rx & beat signal
+    axes[2].set_title("Mixed Tx/Rx signal and Beat Approximation")
+    axes[2].plot(t, chirp_signal_mixed, label="Mixed Tx/Rx", color="purple")
+    axes[2].plot(t, chirp_signal_mixed_beat_approximation, label="Beat Approx.", color="red", linestyle="--")
     axes[2].set_ylabel("Amplitude")
-    axes[2].legend()
+    axes[2].legend(loc='upper right', bbox_to_anchor=(1, 0.85))
+    axes[2].grid(True)
 
-    axes[3].set_title("Hilbert transform of the mixed Tx/Rx chirp (+90° phase shift relative to the mixed Tx/Rx signal)", fontsize=12)
-    axes[3].plot(t, hilbert_transform_result_trimmed)
-    axes[3].set_xlabel("Time (s)")
+    # Hilbert
+    axes[3].set_title("Hilbert Transform of Mixed Signal (+90° phase shift)")
+    axes[3].plot(t, hilbert_transform_result_trimmed, color="green")
     axes[3].set_ylabel("Amplitude")
-    
-    axes[4].set_title("Analytic signal (mixed chirp Tx/Rx + j * Hilbert transform)", fontsize=12)
-    axes[4].plot(t, np.real(analytic_signal), label="Real Part (Tx/Rx)")
-    axes[4].plot(t, np.imag(analytic_signal), label="Imaginary Part (Hilbert)", color="red", linestyle="--")
-    axes[4].set_xlabel("Time (s)")
+    axes[3].grid(True)
+
+    # Analytic signal
+    axes[4].set_title("Analytic Signal (Real + j * Imag)")
+    axes[4].plot(t, np.real(analytic_signal), label="Real (Tx/Rx)", color="purple")
+    axes[4].plot(t, np.imag(analytic_signal), label="Imag (Hilbert)", color="green", linestyle="--")
+    axes[4].legend(loc='upper right', bbox_to_anchor=(1, 0.85))
     axes[4].set_ylabel("Amplitude")
-    axes[4].legend()
+    axes[4].grid(True)
+
+    # Shared plot: Envelope + Phase + Frequency
+    axes[5].set_title("Envelope, Phase and Frequency from Analytic Signal")
+
+    # Primary Y-axis (Amplitude)
+    axes[5].plot(t, amplitude_envelope, label="Envelope", color="purple")
+    axes[5].set_ylabel("Amplitude", color="purple")
+    axes[5].tick_params(axis='y', labelcolor='purple')
+
+    # Secondary Y-axis (Phase)
+    ax_phase = axes[5].twinx()
+    ax_phase.plot(t, instantaneous_phase, label="Phase", color="orange", linestyle="--")
+    ax_phase.set_ylabel("Phase (radians)", color="orange")
+    ax_phase.tick_params(axis='y', labelcolor='orange')
+    ax_phase.set_yticks([phi])
+    ax_phase.set_yticklabels([f"{phi:.2f}"])
+
+    # Third Y-axis (Frequency)
+    ax_freq = axes[5].twinx()
+    ax_freq.spines["right"].set_position(("axes", 1.05))
+    # ax_freq.plot(t, instantaneous_frequency, color="green", linestyle=":", label="Frequency")
+    ax_freq.plot(t, expected_instantaneous_frequency, color="green", linestyle="--", label="Expected")
+    ax_freq.set_ylabel("Freq (Hz)", color="green")
+    ax_freq.tick_params(axis='y', labelcolor='green')
+    ax_freq.set_ylim(f_start - 100, f_end + 100)
+    ax_freq.set_yticks([f_start, f_end])
+
+    axes[5].set_xlabel("Time (s)")
+    axes[5].grid(True)
+
+    # Final layout adjustments
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
     
-    # Amplitude envelope
-    axes[5].set_title("Instantaneous Amplitude Envelope", fontsize=12)
-    axes[5].plot(t, amplitude_envelope)
-    axes[5].set_ylabel("Amplitude")
-
-    # Instantaneous phase
-    axes[6].set_title("Instantaneous Phase", fontsize=12)
-    axes[6].plot(t, instantaneous_phase)
-    axes[6].set_ylabel("Phase (radians)")
-
-    # Instantaneous frequency
-    axes[7].set_title("Instantaneous Frequency", fontsize=12)
-    # axes[7].plot(t, instantaneous_frequency)
-    expected = f_start + k * t[:-1]  # Skip last value to match diff length
-    axes[7].plot(t[:-1], expected, label="Expected", linestyle="--")
-    axes[7].set_ylabel("Frequency (Hz)")
-    axes[7].set_xlabel("Time (s)")
-    # axes[7].legend()
+    mng = plt.get_current_fig_manager()
+    
+    # Try maximizing the matplot window because the plots take up a lot of space
+    try:
+        mng.window.state('zoomed')      # Windows
+    except AttributeError:
+        try:
+            mng.window.showMaximized()  # Linux
+        except AttributeError:
+            # For Mac or others fallback, no built-in maximize but can resize manually:
+            mng.resize(*mng.window.maxsize())
 
     
-    # Optional layout fix
-    plt.tight_layout(rect=[0, 0, 1, 0.96])  # Leave space for the suptitle
     plt.show()
+
 
 if __name__ == "__main__":
     main()
