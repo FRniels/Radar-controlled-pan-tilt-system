@@ -88,6 +88,10 @@ where **c** is the speed of light.
 
 ---
 
+### Low Pass Filtering
+
+---
+
 ### Plotting Simulation 
 
 - The **TX chirp** can be plotted as:
