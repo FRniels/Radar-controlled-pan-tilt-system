@@ -84,7 +84,7 @@ y(t) = cos ( 2 * pi * (f * τ + k * τ * t))
 d = (c * τ) / 2 = (c * Fb / (2 * k))
 ```
 
-where **c** is the speed of light.
+where **c** is the speed of light or sound depending on the radar wave type.
 
 ---
 
