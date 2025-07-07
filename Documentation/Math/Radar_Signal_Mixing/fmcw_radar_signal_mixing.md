@@ -96,6 +96,90 @@ where **c** is the speed of light.
 
 ---
 
+### Convert Range FFT detections to distance
+
+#### Range Calculation Formula
+
+To estimate the distance (range) based on a beat frequency obtained from a chirp signal:
+```
+d = (Fbeat * c * Tc ) / (2 * Bc)
+```
+
+**Where:**
+- d     = Estimated range (meters)  
+- Fbeat = Beat frequency (Hz)  
+- c     = Propagation speed (m/s) → _**either speed of sound or speed of light**_  
+- Tc    = Chirp duration (seconds)  
+- Bc    = Chirp bandwidth = (Fchirp_end - Fchirp_start)(Hz)  
+
+
+#### Decision on which **propagation speed c** to use: Speed of Light vs. Speed of Sound
+
+In signal processing and sensing systems, it's essential to determine whether to use the **speed of sound** or the **speed of light** when calculating range. 
+This depends not just on frequency, but primarily on the **type of wave** and **the medium** it propagates through.
+
+- **Use speed of sound** if:
+  - Transmitting **audible** or **ultrasonic** **sound waves**.
+  - The wave propagates through **air, water, or solid materials**.
+  - Using a **speakers and microphones** setup.
+  - The signal is a **pressure wave** (which is often audible).
+
+  Speed of sound:
+  - **343 m/s** in air (at ~20°C)
+  - **~1500 m/s** in water
+  - Solid materials: lookup propagation speeds for each material
+
+- **Use speed of light** if:
+  - Transmitting **electromagnetic waves** (RF, microwave, infrared, visible light).
+  - The wave propagates through **vacuum or air**.
+  - Using **antennas or lasers** as transducer.
+  - The signal is **radio, radar, or light-based** (Inaudible).
+
+  Speed of light:  
+  - **299 792 458 m/s** in vacuum (EM waves travel at nearly same speed)
+
+##### Frequency ≠ Wave Type
+
+A 40 kHz signal might be either a **sound wave** (ultrasound) or an **RF electromagnetic wave** — the frequency alone doesn’t determine whether to use speed of sound or light.
+
+Instead, always consider:
+- How was the signal **generated**?
+- What kind of **transducer** (speaker, antenna, laser) was used?
+- What **medium** is it traveling through?
+
+###### Rule of Thumb
+
+| Question                                  | Answer -> Use 			  |
+|-------------------------------------------|-----------------------------|
+| Is the chirp **audible**?                 | Sound: 343 m/s 			  |
+| Is it played through a **speaker**?       | Sound: 343 m/s 			  |
+| Is it in **audible or ultrasonic** range? | Likely sound (but confirm!) |
+| Is it sent via **antenna/laser**?         | EM: 299 792 458 m/s 		  |
+
+#### Summary
+
+| Scenario                     | Wave Type             | Medium           | Frequency Range         | Speed to Use              |
+|-----------------------------|------------------------|------------------|-------------------------|---------------------------|
+| **Radar**                   | Electromagnetic (RF)   | Air/Vacuum       | MHz to GHz              | **299 792 458 m/s**       |
+| **Lidar**                   | Electromagnetic (Light)| Air/Vacuum       | 100s of THz (infrared)  | **299 792 458 m/s**       |
+| **Audio/Sonar (air)**       | Sound (pressure)       | Air              | ~20 Hz – 20 kHz         | **343 m/s**               |
+| **Ultrasound (air/solid)**  | Sound (mechanical)     | Air/Solid/Liquid | 20 kHz – MHz            | **Material-specific**     |
+| **Sonar (water)**           | Sound (pressure)       | Water            | ~1 kHz – 100 kHz        | **~1500 m/s**             |
+
+---
+
+### Doppler FFT
+
+---
+
+### Continuous False Alarm Rate
+
+---
+
+### Angle Of Arrival FFT
+
+---
+
 ### Plotting Simulation 
 
 - The **TX chirp** can be plotted as:
